@@ -37,9 +37,8 @@ export const ImagesSlider = ({
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/immutability
     loadImages();
-  });
+  }, []);
 
   const loadImages = () => {
     setLoading(true);
@@ -71,7 +70,7 @@ export const ImagesSlider = ({
     window.addEventListener("keydown", handleKeyDown);
 
     // autoplay
-    let interval: NodeJS.Timeout | null = null;
+    let interval: any;
     if (autoplay) {
       interval = setInterval(() => {
         handleNext();
@@ -80,11 +79,9 @@ export const ImagesSlider = ({
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      if (interval) {
-        clearInterval(interval);
-      }
+      clearInterval(interval);
     };
-  });
+  }, []);
 
   const slideVariants = {
     initial: {
@@ -98,7 +95,7 @@ export const ImagesSlider = ({
       opacity: 1,
       transition: {
         duration: 0.5,
-        ease: "easeInOut" as const,
+        ease: [0.645, 0.045, 0.355, 1.0] as const,
       },
     },
     upExit: {
